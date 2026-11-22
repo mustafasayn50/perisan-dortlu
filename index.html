@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#102b26">
+<meta name="description" content="PERİŞAN DÖRTLÜ skor takip uygulaması">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PERİŞAN DÖRTLÜ">
+<title>PERİŞAN DÖRTLÜ – Skor Takibi</title>
+<style>
+:root{--bg:#0b211c;--panel:#14372e;--panel2:#1b4539;--gold:#d8c18b;--gold2:#f0dfb5;--muted:#a9bcb1;--line:#49665a;--white:#f5f6ef;--red:#d88978}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse at 80% 10%,#1c4438 0,transparent 38%),linear-gradient(145deg,#081a16,#102b26 55%,#071713);color:var(--white);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.09;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='180' viewBox='0 0 220 180'%3E%3Cg transform='rotate(-18 110 90)' fill='none' stroke='%23e8d5a5' stroke-width='2'%3E%3Crect x='18' y='24' width='44' height='68' rx='7'/%3E%3Crect x='82' y='78' width='44' height='68' rx='7'/%3E%3Crect x='154' y='16' width='44' height='68' rx='7'/%3E%3C/g%3E%3C/svg%3E")}
+.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 16px calc(90px + env(safe-area-inset-bottom));position:relative}
+header{display:flex;align-items:center;justify-content:space-between;padding:24px 2px 18px;gap:10px}.brand-wrap{display:flex;align-items:center;gap:10px;min-width:0}.brand-icon{width:46px;height:46px;object-fit:cover;border-radius:12px;border:1px solid rgba(216,193,139,.65);box-shadow:0 4px 16px #0005}.brand{font-size:24px;font-weight:900;letter-spacing:2px;color:var(--gold2)}.sub{font-size:10px;letter-spacing:2px;color:var(--muted);margin-top:3px}.pill{white-space:nowrap;border:1px solid #557665;border-radius:30px;padding:7px 11px;color:var(--gold2);font-size:11px;letter-spacing:.8px}
+.tabs{display:flex;gap:7px;overflow:auto;margin:0 0 16px;padding-bottom:3px}.tab{flex:1;min-width:75px;border:1px solid var(--line);border-radius:12px;background:#102d25;color:var(--muted);padding:11px 8px;font-size:12px}.tab.active{background:var(--gold);color:#152b23;border-color:var(--gold);font-weight:800}
+.panel{background:linear-gradient(145deg,rgba(27,69,57,.96),rgba(15,43,35,.96));border:1px solid rgba(216,193,139,.25);border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 12px 30px #0003;backdrop-filter:blur(8px)}
+.panel h2{font-size:15px;letter-spacing:1px;margin:0 0 13px;color:var(--gold2)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.score{border:1px solid #526f60;background:linear-gradient(145deg,#244d40,#183b31);border-radius:15px;padding:14px;min-height:108px}.score .name{font-size:11px;color:var(--gold);font-weight:750;letter-spacing:.7px;overflow-wrap:anywhere}.score .value{font-size:34px;font-weight:800;line-height:1.25;margin-top:7px;font-variant-numeric:tabular-nums}.pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.pair-card{border:1px solid rgba(216,193,139,.42);background:rgba(10,34,27,.55);border-radius:13px;padding:11px 12px}.pair-name{font-size:11px;color:var(--gold2);font-weight:750;letter-spacing:.4px;overflow-wrap:anywhere}.pair-value{font-size:25px;font-weight:850;margin-top:4px;font-variant-numeric:tabular-nums}.muted{color:var(--muted);font-size:12px}.field{display:flex;flex-direction:column;gap:6px;margin:10px 0}.field label{font-size:12px;color:var(--gold2)}input{width:100%;background:#0c261f;color:var(--white);border:1px solid #557565;border-radius:11px;padding:12px;font-size:16px;outline:none}input:focus{border-color:var(--gold)}button{cursor:pointer;font:inherit}.primary{width:100%;border:0;border-radius:12px;padding:14px;background:linear-gradient(100deg,#c9ad70,#efdfb7);color:#172c23;font-weight:900;letter-spacing:.7px;margin-top:8px}.secondary{border:1px solid var(--line);background:#102d25;color:var(--gold2);border-radius:10px;padding:9px 12px;font-size:12px}.danger{border-color:#805348;color:#efb4a5}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.entry{display:grid;grid-template-columns:1fr 115px;align-items:center;gap:12px;margin:10px 0}.entry label{font-size:13px;color:#e7eee7}.history-item{padding:12px 0;border-top:1px solid #ffffff18}.history-item:first-child{border-top:0}.history-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.mini{font-size:12px;color:var(--muted);margin-top:8px;display:grid;grid-template-columns:repeat(2,1fr);gap:5px}.mini span{display:flex;justify-content:space-between}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.empty{text-align:center;color:var(--muted);padding:24px 8px;font-size:13px}.winner{font-size:14px;color:var(--gold2);text-align:center;padding:10px;border:1px dashed #8c7950;border-radius:12px;margin-top:12px}.hidden{display:none!important}.bottom{position:fixed;bottom:0;left:0;right:0;background:#0b211cf2;border-top:1px solid #526b5d;padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:10px;backdrop-filter:blur(14px)}.bottom button{max-width:180px;flex:1}.small{font-size:11px;color:var(--muted);line-height:1.5}.backup-box{margin-top:18px;padding:14px;border:1px solid rgba(216,193,139,.3);border-radius:14px;background:rgba(7,25,20,.35)}.backup-box h2{margin-bottom:6px}.backup-box .actions{margin-top:10px}.backup-box button{flex:1}.modal{position:fixed;inset:0;background:#0009;display:flex;align-items:center;justify-content:center;padding:18px;z-index:5}.modalbox{width:min(100%,430px);background:#14372e;border:1px solid var(--gold);border-radius:18px;padding:18px;max-height:85vh;overflow:auto}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.score{min-height:120px}.score .value{font-size:38px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="brand-wrap"><img class="brand-icon" src="icon-192.png" alt="Perişan Dörtlü"/><div><div class="brand">PERİŞAN DÖRTLÜ</div><div class="sub">PREMIUM OKEY SKOR TAKİBİ</div></div></div><div class="pill">● OYUN TAKİBİ</div></header>
+<nav class="tabs">
+<button class="tab active" data-tab="score">Skor</button><button class="tab" data-tab="history">Geçmiş</button><button class="tab" data-tab="players">Oyuncular</button><button class="tab" data-tab="archives">Arşiv</button>
+</nav>
+<main id="score" class="view">
+<section class="panel"><div class="row"><h2>GÜNCEL SKORLAR</h2><span class="muted" id="roundCount">0 el</span></div><div class="grid" id="scoreCards"></div><div class="pair-grid" id="pairTotals"></div><div id="winner"></div></section>
+<section class="panel"><h2>YENİ EL GİRİŞİ</h2><div id="entryFields"></div><button class="primary" id="saveHand">＋ ELİ KAYDET</button><p class="small">Her el için dört slota yazılacak puanları gir. Boş bırakılan alanlar 0 kabul edilir.</p></section>
+</main>
+<main id="history" class="view hidden"><section class="panel"><div class="row"><h2>EL GEÇMİŞİ</h2><span class="muted" id="historyCount"></span></div><div id="historyList"></div></section></main>
+<main id="players" class="view hidden"><section class="panel"><h2>OYUNCU / SLOT İSİMLERİ</h2><div id="nameFields"></div><button class="primary" id="saveNames">İSİMLERİ KAYDET</button></section></main>
+<main id="archives" class="view hidden"><section class="panel"><div class="row"><h2>OYUN ARŞİVİ</h2><button class="secondary" id="newGame">＋ Yeni oyun</button></div><div id="archiveList"></div><div class="backup-box"><h2>VERİ GÜVENLİĞİ</h2><p class="small">Oyunlarını yedekle; başka telefona veya sunucuya geçerken yedeğini geri yükle.</p><div class="actions"><button class="secondary" id="exportBackup">⬇ Yedeği indir</button><button class="secondary" id="chooseBackup">⬆ Yedeği yükle</button><input id="backupFile" type="file" accept="application/json,.json" hidden></div></div><p class="small">Yeni oyun başlatıldığında mevcut skorlar tarih ve sonuçlarıyla arşivlenir.</p></section></main>
+</div>
+<div class="bottom"><button class="secondary" id="undo">↶ Son eli geri al</button><button class="secondary danger" id="reset">Oyunu sıfırla</button></div>
+<div id="modal" class="modal hidden"><div class="modalbox"><div class="row"><h2 id="modalTitle">Eli düzenle</h2><button class="secondary" id="closeModal">Kapat</button></div><div id="modalBody"></div></div></div>
+<script>
+const DEFAULT_NAMES=["Ortaklar 1","Ortaklar 2","Cezalar 1","Cezalar 2"];
+const fresh=()=>({names:[...DEFAULT_NAMES],hands:[],archives:[]});
+let state;try{state=JSON.parse(localStorage.getItem("okeyClubPremium"))||fresh()}catch{state=fresh()}
+function persist(){localStorage.setItem("okeyClubPremium",JSON.stringify(state));render()}
+function totals(hands=state.hands){return [0,1,2,3].map(i=>hands.reduce((s,h)=>s+(Number(h.scores[i])||0),0))}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+ document.getElementById("roundCount").textContent=state.hands.length+" el";
+ document.getElementById("scoreCards").innerHTML=state.names.map((n,i)=>`<div class="score"><div class="name">${esc(n||"İsimsiz slot")}</div><div class="value">${totals()[i].toLocaleString("tr-TR")}</div></div>`).join("");
+ const t=totals();
+ document.getElementById("pairTotals").innerHTML=[{name:`${state.names[0]} + ${state.names[2]}`,value:t[0]+t[2]},{name:`${state.names[1]} + ${state.names[3]}`,value:t[1]+t[3]}].map(x=>`<div class="pair-card"><div class="pair-name">${esc(x.name)} TOPLAMI</div><div class="pair-value">${x.value.toLocaleString("tr-TR")}</div></div>`).join("");
+ const pairScores=[{name:`${state.names[0]} + ${state.names[2]}`,value:t[0]+t[2]},{name:`${state.names[1]} + ${state.names[3]}`,value:t[1]+t[3]}];
+ const minPair=Math.min(...pairScores.map(p=>p.value));
+ const winningPairs=pairScores.filter(p=>p.value===minPair);
+ document.getElementById("winner").innerHTML=state.hands.length?`<div class="winner">🏆 En düşük puana sahip takım: <b>${pairScores[0].value===pairScores[1].value?"Berabere":pairScores[0].value<pairScores[1].value?"CM":"AM"}</b></div>`:"";
+ document.getElementById("entryFields").innerHTML=state.names.map((n,i)=>`<div class="entry"><label>${esc(n)}</label><input type="number" inputmode="numeric" id="entry${i}" placeholder="Puan" step="1"></div>`).join("");
+ document.getElementById("historyCount").textContent=state.hands.length+" kayıt";
+ document.getElementById("historyList").innerHTML=state.hands.length?state.hands.map((h,i)=>`<div class="history-item"><div class="history-head"><b>${i+1}. El</b><span class="muted">${new Date(h.date).toLocaleString("tr-TR")}</span></div><div class="mini">${h.scores.map((v,j)=>`<span>${esc(state.names[j])}<b>${Number(v)||0}</b></span>`).join("")}</div><div class="actions"><button class="secondary" onclick="editHand(${i})">Düzenle</button><button class="secondary danger" onclick="deleteHand(${i})">Sil</button></div></div>`).join(""):'<div class="empty">Henüz el kaydı yok.</div>';
+ document.getElementById("nameFields").innerHTML=state.names.map((n,i)=>`<div class="field"><label>Slot ${i+1}</label><input id="name${i}" value="${esc(n)}" maxlength="24"></div>`).join("");
+ document.getElementById("archiveList").innerHTML=state.archives.length?state.archives.slice().reverse().map((a,ri)=>{let ix=state.archives.length-1-ri;return `<div class="history-item"><div class="history-head"><b>Oyun ${state.archives.length-ri}</b><span class="muted">${new Date(a.date).toLocaleString("tr-TR")}</span></div><div class="mini">${a.names.map((n,j)=>`<span>${esc(n)}<b>${totals(a.hands)[j]}</b></span>`).join("")}</div><div class="actions"><button class="secondary" onclick="restoreArchive(${ix})">Bu oyunu geri yükle</button></div></div>`}).join(""):'<div class="empty">Henüz arşivlenmiş oyun yok.</div>';
+}
+document.getElementById("saveHand").onclick=()=>{let scores=[0,1,2,3].map(i=>Number(document.getElementById("entry"+i).value)||0);if(!scores.some(v=>v!==0)){alert("En az bir slota puan gir.");return}state.hands.push({scores,date:new Date().toISOString()});persist();[0,1,2,3].forEach(i=>{const field=document.getElementById("entry"+i);if(field)field.value=""});document.getElementById("entry0")?.focus()};
+document.getElementById("saveNames").onclick=()=>{state.names=[0,1,2,3].map(i=>document.getElementById("name"+i).value.trim()||DEFAULT_NAMES[i]);persist();alert("İsimler kaydedildi.")};
+document.getElementById("undo").onclick=()=>{if(!state.hands.length)return alert("Geri alınacak el yok.");if(confirm("Son el silinsin mi?")){state.hands.pop();persist()}};
+document.getElementById("reset").onclick=()=>{if(!state.hands.length)return alert("Aktif oyunda kayıt yok.");if(confirm("Aktif oyundaki tüm eller silinsin mi? Arşive alınmayacak.")){state.hands=[];persist()}};
+document.getElementById("newGame").onclick=()=>{if(!state.hands.length)return alert("Arşivlenecek oyun kaydı yok.");if(confirm("Mevcut oyun arşivlensin ve yeni oyun başlasın mı?")){state.archives.push({names:[...state.names],hands:JSON.parse(JSON.stringify(state.hands)),date:new Date().toISOString()});state.hands=[];persist();showTab("score")}};
+function editHand(i){let h=state.hands[i];document.getElementById("modalTitle").textContent=(i+1)+". eli düzenle";document.getElementById("modalBody").innerHTML=state.names.map((n,j)=>`<div class="field"><label>${esc(n)}</label><input type="number" id="edit${j}" value="${Number(h.scores[j])||0}" step="1"></div>`).join("")+`<button class="primary" id="saveEdit">DEĞİŞİKLİKLERİ KAYDET</button>`;document.getElementById("modal").classList.remove("hidden");document.getElementById("saveEdit").onclick=()=>{state.hands[i].scores=[0,1,2,3].map(j=>Number(document.getElementById("edit"+j).value)||0);persist();document.getElementById("modal").classList.add("hidden")}}
+function deleteHand(i){if(confirm((i+1)+". el silinsin mi?")){state.hands.splice(i,1);persist()}}
+function restoreArchive(i){if(!confirm("Arşivdeki oyun aktif oyunun yerine yüklensin mi? Aktif oyun önce arşivlenir."))return;if(state.hands.length)state.archives.push({names:[...state.names],hands:JSON.parse(JSON.stringify(state.hands)),date:new Date().toISOString()});let a=state.archives[i];state.names=[...a.names];state.hands=JSON.parse(JSON.stringify(a.hands));persist();showTab("score")}
+document.getElementById("closeModal").onclick=()=>document.getElementById("modal").classList.add("hidden");
+function showTab(id){document.querySelectorAll(".view").forEach(v=>v.classList.toggle("hidden",v.id!==id));document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b.dataset.tab===id))}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+// Portable JSON backup: useful when moving from Netlify to GitHub Pages or to another phone.
+document.getElementById("exportBackup").onclick=()=>{const payload={app:"PERİŞAN DÖRTLÜ",version:1,exportedAt:new Date().toISOString(),state};const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="perisan-dortlu-yedek-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)};
+document.getElementById("chooseBackup").onclick=()=>document.getElementById("backupFile").click();
+document.getElementById("backupFile").onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const incoming=parsed.state||parsed;if(!Array.isArray(incoming.names)||incoming.names.length!==4||!Array.isArray(incoming.hands)||!Array.isArray(incoming.archives))throw new Error("Yedek dosyası formatı geçersiz.");if(!confirm("Mevcut oyun ve arşivler bu yedekteki verilerle değiştirilsin mi?"))return;state={names:incoming.names.map(String),hands:incoming.hands,archives:incoming.archives};persist();showTab("score");alert("Yedek başarıyla yüklendi.")}catch(err){alert("Yedek yüklenemedi: "+err.message)}finally{e.target.value=""}};
+render();
+if("serviceWorker" in navigator && location.protocol!=="file:"){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+</script>
+</body></html>
